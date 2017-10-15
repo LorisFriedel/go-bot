@@ -45,12 +45,6 @@ func (b *Bot) initSession(token string) error {
 
 	b.Session.Token = token
 
-	// Verify the Token is valid and grab user information
-	b.Session.State.User, err = b.Session.User("@me")
-	if err != nil {
-		return fmt.Errorf("error fetching user information (%v)", err)
-	}
-
 	// Open a websocket connection to Discord
 	err = b.Session.Open()
 	if err != nil {

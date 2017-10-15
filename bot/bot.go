@@ -12,10 +12,17 @@ type Bot struct {
 	Router  *router.Router
 }
 
-func New(token string) (*Bot, error) {
+// New create a new instance of a discord bot that connect using the given token.
+// The only possible additional argument is the bot name.
+func New(token string, args ...string) (*Bot, error) {
 	b := &Bot{}
 
-	err := b.initSession(token)
+	name := "@me"
+	if len(args) > 0 {
+		name = args[0]
+	}
+
+	err := b.initSession(name, token)
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +35,7 @@ func New(token string) (*Bot, error) {
 	return b, nil
 }
 
-func (b *Bot) initSession(token string) error {
+func (b *Bot) initSession(name, token string) error {
 	session, err := discordgo.New()
 	if err != nil {
 		return err
@@ -44,7 +51,7 @@ func (b *Bot) initSession(token string) error {
 	b.Session.Token = token
 
 	// Verify the Token is valid and grab user information
-	b.Session.State.User, err = b.Session.User("@me")
+	b.Session.State.User, err = b.Session.User(name)
 	if err != nil {
 		return fmt.Errorf("error fetching user information (%v)", err)
 	}

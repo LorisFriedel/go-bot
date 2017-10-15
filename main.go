@@ -35,7 +35,10 @@ func main() {
 		return
 	}
 
-	// TODO add my amazing routes
+	// TODO add my amazing routes like:
+	// gobot.Router.AddRoute(
+	// 				"amazingFunctionality",
+	//				router.RouteBuilder.Contains("fromage").HandlerFunc(...).Build())
 
 	log.Infoln("The Bot is running. Press CTRL-C to exit.")
 	waitToBeMurdered()
@@ -61,7 +64,7 @@ func waitToBeMurdered() {
 
 func parsEnvVar() *Arguments {
 	return &Arguments{
-		token: os.Getenv("DG_TOKEN"),
+		token: os.Getenv("D_TOKEN"),
 	}
 }
 

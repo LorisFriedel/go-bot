@@ -36,9 +36,8 @@ func main() {
 	}
 
 	// TODO add my amazing routes like:
-	// gobot.Router.AddRoute(
-	// 				"amazingFunctionality",
-	//				router.RouteBuilder.Contains("fromage").HandlerFunc(...).Build())
+	// myRoute, err := router.RouteBuilder.Contains("fromage").HandlerFunc(...).Build()
+	// gobot.Router.AddRoute("amazingFunctionality", myRoute)
 
 	log.Infoln("The Bot is running. Press CTRL-C to exit.")
 	waitToBeMurdered()

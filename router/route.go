@@ -5,7 +5,7 @@ import (
 
 	"strings"
 
-	"github.com/bwmarrin/discordgo"
+	dgo "github.com/bwmarrin/discordgo"
 	"github.com/lann/builder"
 )
 
@@ -15,14 +15,14 @@ type IRoute interface {
 }
 
 // HandlerFunc is the function signature required for a message route handler.
-type HandlerFunc func(ds *discordgo.Session, mc *discordgo.MessageCreate, ch *discordgo.Channel)
+type HandlerFunc func(ds *dgo.Session, mc *dgo.MessageCreate, ch *dgo.Channel)
 
 // Handler contains the Handle method used as a callback for the router when a route match.
 type Handler interface {
-	Handle(ds *discordgo.Session, mc *discordgo.MessageCreate, ch *discordgo.Channel)
+	Handle(ds *dgo.Session, mc *dgo.MessageCreate, ch *dgo.Channel)
 }
 
-func (hf HandlerFunc) Handle(ds *discordgo.Session, mc *discordgo.MessageCreate, ch *discordgo.Channel) {
+func (hf HandlerFunc) Handle(ds *dgo.Session, mc *dgo.MessageCreate, ch *dgo.Channel) {
 	hf(ds, mc, ch)
 }
 
@@ -57,7 +57,7 @@ type Route struct {
 }
 
 // Handle is the callback called when this route is matched by a message.
-func (r *Route) Handle(ds *discordgo.Session, mc *discordgo.MessageCreate, ch *discordgo.Channel) {
+func (r *Route) Handle(ds *dgo.Session, mc *dgo.MessageCreate, ch *dgo.Channel) {
 	if r.handler != nil {
 		r.handler.Handle(ds, mc, ch)
 	}

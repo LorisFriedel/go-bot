@@ -4,11 +4,11 @@ import (
 	"fmt"
 
 	"github.com/LorisFriedel/go-bot/router"
-	"github.com/bwmarrin/discordgo"
+	dgo "github.com/bwmarrin/discordgo"
 )
 
 type Bot struct {
-	Session *discordgo.Session
+	Session *dgo.Session
 	Router  *router.Router
 }
 
@@ -31,7 +31,7 @@ func New(token string) (*Bot, error) {
 }
 
 func (b *Bot) initSession(token string) error {
-	session, err := discordgo.New()
+	session, err := dgo.New()
 	if err != nil {
 		return err
 	}

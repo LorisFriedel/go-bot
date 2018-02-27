@@ -6,7 +6,7 @@ package router
 import (
 	"strings"
 
-	"github.com/bwmarrin/discordgo"
+	dgo "github.com/bwmarrin/discordgo"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -64,7 +64,7 @@ func (r *Router) matchRoutes(msg string) []IRoute {
 // registered using the DiscordGo.Session.AddHandler function.  This function
 // will receive all Discord messages and parse them for matches to registered
 // routes.
-func (r *Router) OnMessageCreate(ds *discordgo.Session, mc *discordgo.MessageCreate) {
+func (r *Router) OnMessageCreate(ds *dgo.Session, mc *dgo.MessageCreate) {
 
 	// Ignore all messages created by the Bot account itself
 	if mc.Author.ID == ds.State.User.ID {
@@ -99,7 +99,7 @@ func (r *Router) OnMessageCreate(ds *discordgo.Session, mc *discordgo.MessageCre
 // Help function provides a build in "help" command that will display a list
 // of all registered routes (commands). To use this function it must first be
 // registered with the Router.AddRoute function.
-func (r *Router) BuiltinHelp(ds *discordgo.Session, mc *discordgo.MessageCreate, ch *discordgo.Channel) {
+func (r *Router) BuiltinHelp(ds *dgo.Session, mc *dgo.MessageCreate, ch *dgo.Channel) {
 
 	// TODO
 	// ds.ChannelMessageSend(dm.ChannelID, resp)

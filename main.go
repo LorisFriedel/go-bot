@@ -22,11 +22,9 @@ func init() {
 }
 
 func main() {
-	// Parse arguments
+	// Parse arguments from all sources
 	flag.Parse()
-	argsCli := parseCli()
-	argsEnvVar := parsEnvVar()
-	args := merge(argsEnvVar, argsCli)
+	args := merge(parsEnvVar(), parseCli())
 
 	// Set up
 	gobot, err := bot.New(args.token)
@@ -35,12 +33,17 @@ func main() {
 		return
 	}
 
-	// TODO add my amazing routes like:
+	// TODO add my amazing simple routes like:
 	// myRoute, err := router.RouteBuilder.Contains("fromage").HandlerFunc(...).Build()
 	// gobot.Router.AddRoute("amazingFunctionality", myRoute)
+	// TODO TEXT ROUTER
+
+	// TODO add voice route using a special router?
+	// TODO VOICE ROUTER
+	// todo + possibility to overwrite or add new voice handler
 
 	log.Infoln("The Bot is running. Press CTRL-C to exit.")
-	waitToBeMurdered()
+	waitSIGTERM()
 
 	// Clean up
 	err = gobot.Stop()
@@ -51,15 +54,15 @@ func main() {
 }
 
 // Wait for a CTRL-C
-func waitToBeMurdered() {
+func waitSIGTERM() {
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
 }
 
-///////////////////////////////////////////
-//////////////// Parsing //////////////////
-///////////////////////////////////////////
+/////////////////////////////////////////////////////
+//////////////// Parsing arguments //////////////////
+/////////////////////////////////////////////////////
 
 func parsEnvVar() *Arguments {
 	return &Arguments{
@@ -74,7 +77,7 @@ func parseCli() *Arguments {
 }
 
 // merge aggregate arguments from every given sources. Override are made regarding the method arguments order.
-// (the last one can override the first one but not the other way round)
+// (the last one may override the first one but not the other way round)
 func merge(argsList ...*Arguments) *Arguments {
 	result := &Arguments{}
 	for _, args := range argsList {

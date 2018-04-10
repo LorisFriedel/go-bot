@@ -5,7 +5,7 @@ import (
 
 	"strings"
 
-	dgo "github.com/bwmarrin/discordgo"
+	dgo "github.com/LorisFriedel/discordgo"
 	"github.com/lann/builder"
 )
 

@@ -1,12 +1,11 @@
 // Package mux provides a simple Discord message route multiplexer that
 // parses messages and then executes a matching registered handler, if found.
-// dgMux can be used with both Disgord and the DiscordGo library.
 package router
 
 import (
 	"strings"
 
-	dgo "github.com/bwmarrin/discordgo"
+	dgo "github.com/LorisFriedel/discordgo"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -53,7 +52,7 @@ func (r *Router) matchRoutes(msg string) []IRoute {
 		}
 	}
 
-	if len(routes) == 0 {
+	if len(routes) == 0 && r.defaultRoute != nil {
 		routes = append(routes, r.defaultRoute)
 	}
 

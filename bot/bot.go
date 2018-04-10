@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/LorisFriedel/go-bot/router"
-	dgo "github.com/bwmarrin/discordgo"
+	dgo "github.com/LorisFriedel/discordgo"
 )
 
 type Bot struct {
@@ -31,22 +31,20 @@ func New(token string) (*Bot, error) {
 }
 
 func (b *Bot) initSession(token string) error {
-	session, err := dgo.New()
+	// Verify a Token was provided
+	if token == "" {
+		return fmt.Errorf("invalid empty Discord authentication token")
+	}
+
+	session, err := dgo.New("Bot " + token)
 	if err != nil {
 		return err
 	}
 
 	b.Session = session
 
-	// Verify a Token was provided
-	if token == "" {
-		return fmt.Errorf("invalid Discord authentication token")
-	}
-
-	b.Session.Token = token
-
 	// Open a websocket connection to Discord
-	err = b.Session.Open()
+	err = session.Open()
 	if err != nil {
 		return fmt.Errorf("error opening connection to Discord (%v)", err)
 	}
@@ -60,6 +58,7 @@ func (b *Bot) initRouter() error {
 	// Register the Router OnMessageCreate handler that listens for and processes all messages received.
 	b.Session.AddHandler(b.Router.OnMessageCreate)
 
+	// TODO allow to disable that or do something to easily add it if wanted
 	help, err := router.RouteBuilder.
 		Prefix("go help").
 		Description("Display this message").
